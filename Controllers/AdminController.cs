@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization.Internal;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 
 namespace EF_DotNetCore.Controllers
@@ -148,10 +151,47 @@ namespace EF_DotNetCore.Controllers
             }
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> EditUserInRole(List<UserRoleViewModel> list)
-        //{
-
-        //}
+        [HttpPost]
+        public async Task<IActionResult> EditUserInRole(List<UserRoleViewModel> list,string ID)
+        {
+           var role = await roleManager.FindByIdAsync(ID);
+            if(role == null)
+            {
+                ViewBag.ErrorMsg = $"Role with ID:{ID} does not exists";
+                return View("ViewNotFound");
+            }
+            else
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    var user =await usermanager.FindByIdAsync(list[i].UserID);
+                    IdentityResult result = null;
+                    if (list[i].IsSelected && !(await usermanager.IsInRoleAsync(user,role.Name)))
+                    {
+                        result = await usermanager.AddToRoleAsync(user, role.Name);
+                    }
+                    else if (!list[i].IsSelected && (await usermanager.IsInRoleAsync(user,role.Name)))
+                    {
+                        result = await usermanager.RemoveFromRoleAsync(user, role.Name);                    
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    if(result.Succeeded)
+                    {
+                        if (i < list.Count - 1)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            return RedirectToAction("RoleEditView",new {id=ID});
+                        }
+                    }
+                }
+                return RedirectToAction("RoleEditView", new {id=ID});
+            }
+        }
     }
 }

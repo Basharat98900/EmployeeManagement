@@ -16,23 +16,26 @@
                                     <p class="h3">Add or Remove Users from this Role</p>
                                 </div>
                                 <div class="card-body">
-                                    @if(Model.Any()==null)
+                                    @if(Model.Any())
                                     {
-                                        <p class="h5">None at the moment</p>
-                                    }
-                                    else{
                                         for (int i = 0; i < Model.Count; i++)
                                             {
+                                                <input type="hidden" class="form-control" asp-for="@Model[i].UserName">
+                                                <input type="hidden" class="form-control" asp-for="@Model[i].UserID">
                                                 <input class="form-check-input h6" asp-for="@Model[i].IsSelected">
                                                 <label class="form-check-label h6" asp-for="@Model[i].IsSelected">@Model[i].UserName</label><br />
                                             }
                                     }
+                                    else{
+                                <p class="h5">None at the moment</p>
+
+                            }
                                 </div>
                                 <div class="card-footer">
                                    <div class="row">
                                 <div class="col-6">
                                     <div class="d-grid">
-                                        <button class="btn btn-dark d-block">Update</button>
+                                        <input type="submit" value="Update" class="btn btn-dark d-block">
                                     </div>
                                 </div>
                                 <div class="col-6">
