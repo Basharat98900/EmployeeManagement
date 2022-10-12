@@ -1,0 +1,45 @@
+﻿@model EF_DotNetCore.Models.Employee;
+@inject IMockEmployeeRepository obj;
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Employees</title>
+</head>
+    
+<body>
+    <h3>Employees Count: @obj.GetAllEmployees().Count().ToString()</h3>
+    <div class="row ">
+        <div class="col-3 pt-5 mx-auto border border-1 border-dark rounded">
+
+            <form class="p-3" method="post" asp-controller="Home" asp-action="Employees">
+                <label class="form-label" asp-for="ID">ID</label>
+                <input class="form-control" asp-for="ID" />
+                <span class="text-danger" asp-validation-for="ID"></span>
+                <br />
+                <label class="form-label" asp-for="Name">Name</label>
+                <input class="form-control" asp-for="Name" />
+                <span class="text-danger" asp-validation-for="Name"></span>
+                <br />
+                <label class="form-label" asp-for="Address">Address</label>
+                <input class="form-control" asp-for="Address" />
+                <span class="text-danger" asp-validation-for="Address"></span>
+                <br />
+                <label class="form-label" asp-for="Salary">Salary</label>
+                <input class="form-control" asp-for="Salary" />
+                <span class="text-danger" asp-validation-for="Salary"></span>
+                <br />
+                <label class="form-label" asp-for="DateOfBirth">DateOfBirth</label>
+                <input class="form-control" asp-for="DateOfBirth" />
+                <span class="text-danger" asp-validation-for="DateOfBirth"></span>
+                <br />
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>

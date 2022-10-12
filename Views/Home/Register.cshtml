@@ -1,0 +1,64 @@
+﻿
+@{
+
+}
+@model EF_DotNetCore.Models.Employee;
+@using EF_DotNetCore.Models;
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+</head>
+<body class="bg-black">
+   <div class="container">
+        <div class="row pt-5">
+            <div class="col-4  mx-auto ">
+
+                <form class="p-3 bg-black border border-white border-1 rounded-3" method="post" asp-controller="Home" asp-action="Register">
+                    @* <label class="form-label" asp-for="ID">ID</label>
+                    <input class="form-control" asp-for="ID" />
+                    <span class="text-danger" asp-validation-for="ID"></span>
+                    <br />*@
+                    <div class="mb-2">
+                        <label class="form-label text-white" asp-for="Name">Name</label>
+                        <input class="form-control" placeholder="Name" asp-for="Name" />
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <br />
+                    <div class="mb-2">
+                        <label class="form-label text-white" asp-for="Address">Address</label>
+                        <input class="form-control" placeholder="Address" asp-for="Address" />
+                        <span class="text-danger" asp-validation-for="Address"></span>
+                    </div>
+                    <br />
+                    <div class="mb-2">
+                        <label class="form-label text-white" asp-for="Salary">Salary</label>
+                        <input class="form-control" placeholder="Salary" asp-for="Salary" />
+                        <span class="text-danger" asp-validation-for="Salary"></span>
+                    </div>
+                    <br />
+                    <div class="mb-2">
+                        <label class="form-label text-white" asp-for="DateOfBirth">DateOfBirth</label>
+                        <input type="date" class="form-control" asp-for="DateOfBirth" />
+                        <span class="text-danger" asp-validation-for="DateOfBirth"></span>
+                    </div>
+                    <br />
+                    <div class="form-group mb-3">
+                        <label asp-for="Department" class="form-label text-white"></label>
+                        <select asp-for="Department" class="form-select" asp-items="@Html.GetEnumSelectList<Dept>()">
+                            <option value="">Please Select</option>
+                        </select><span asp-validation-for="Department" class="text-danger"></span>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-dark btn-outline-light ">Submit</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+   </div>
+</body>
+</html>

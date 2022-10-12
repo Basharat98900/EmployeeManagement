@@ -1,0 +1,73 @@
+﻿
+
+@model IEnumerable<Employee> 
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <title>View</title>
+</head>
+<body class="bg-black">
+   <div class="container-fluid">
+        <div class="row ">
+            @foreach (Employee obj in Model)
+            {
+                <div class="col-lg-4 col-md-5 col-sm-6 p-2 pt-3 mx-auto ">
+                    <div class="card bg-black rounded-5 border border-white border-2">
+                        <div class="card-header"></div>
+                        @{string str;}
+                        @if(obj.PhotoPath!=null){
+                            str = obj.PhotoPath;
+                            <img class="card-img img-fluid"  src="~/Images/@str"  />
+                        }else{
+                            str = "AvatarImage.png";
+                            <img class="card-img img-fluid"  src="~/Photos/@str" />
+                        }
+                           
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <td class="text-white lead">Name: @obj.Name</td>
+                                    <td class="text-white h4">ID: @obj.ID</td>
+                                </tr>
+                            </table>
+                            @*<p class="card-title h4 text-white">Name: @obj.Name<br>
+                                ID: @obj.ID
+                            </p>*@
+                             
+                             <hr>
+                            <p class="card-text text-white">
+                                <table class="table table-sm  ">
+                                    <tr><td class="h6 text-white">Address:</td><td class="text-white">@obj.Address</td></tr>
+                                    <tr><td class="h6 text-white">Salary:</td><td class="text-white">@obj.Salary</td></tr>
+                                    <tr><td class="h6 text-white">DOB:</td><td class="text-white">@obj.DateOfBirth</td></tr>
+                                    <tr><td class="h6 text-white">Department:</td><td class="text-white">@obj.Department</td></tr>
+                                </table>
+                                @*<span class="h6">Address:</span>&emsp;&ensp;&nbsp;&nbsp; @obj.Address<br>
+                                <span class="h6">Salary:</span>&emsp;&emsp;&ensp;&nbsp;  @obj.Salary<br>
+                                <span class="h6">DOB:</span>&emsp;&emsp;&emsp;&ensp;&nbsp;@obj.DateOfBirth.ToString()<br>
+                                <span class="h6">Department:</span> @obj.Department<br>*@
+                            </p>
+                            
+                        </div>
+                        <div class="card-footer mx-auto">
+                            
+                            <a asp-action="Delete" asp-route-id="@obj.ID" class="btn btn-dark btn-outline-light">Delete</a>
+                            <a asp-action="Update" asp-route-id="@obj.ID" class="btn btn-dark btn-outline-light">Update</a>
+                            <a asp-action="Details" asp-route-id="@obj.ID" class="btn btn btn-dark btn-outline-light">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+   </div>
+   <div class="container">
+      
+       
+   </div>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+﻿@model CreateRoleViewModel
+
+
+
+<html>
+    <head>
+        <title>
+
+        </title>
+    </head>
+    <body class="bg-black">
+    <div  class="container mt-5 py-3 col-6 border border-white rounded">
+        <form method="post" class="" asp-action="CreateRole" asp-controller="Admin">
+            <div asp-validation-summary="All" class="text-danger">
+            </div>
+                <div>
+                    <label asp-for="RoleName" class="form-label h6 text-light" ></label>
+                    <input placeholder="RoleName" class="form-control" asp-for="RoleName" />
+                    <span class="text-danger" asp-validation-for="RoleName"></span>
+                </div>
+                <div class="d-grid mt-2">
+                    <button class="btn d-block btn-dark ">Submit</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

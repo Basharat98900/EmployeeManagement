@@ -1,0 +1,59 @@
+﻿@model EF_DotNetCore.Models.Employee
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body class="bg-black">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-lg-3 col-md-5 col-sm-6 p-2 pt-3 mx-auto ">
+
+                <div class="card bg-black rounded-5 border border-white border-2">
+                    <div class="card-header"></div>
+                    @{
+                        string str;
+                    }
+                    @if (Model.PhotoPath != null)
+                    {
+                        str = Model.PhotoPath;
+                        <img class="card-img img-fluid" src="~/Images/@str" />
+                    }
+                    else
+                    {
+                        str = "AvatarImage.png";
+                        <img class="card-img img-fluid" src="~/Photos/@str" />
+                    }
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <td class="text-white lead">Name: @Model.Name</td>
+                                <td class="text-white h4">ID: @Model.ID</td>
+                            </tr>
+                        </table>
+                        <hr>
+                        <p class="card-text text-white">
+                            <table class="table table-sm  ">
+                                <tr><td class="h6 text-white">Address:</td><td class="text-white">@Model.Address</td></tr>
+                                <tr><td class="h6 text-white">Salary:</td><td class="text-white">@Model.Salary</td></tr>
+                                <tr><td class="h6 text-white">DOB:</td><td class="text-white">@Model.DateOfBirth</td></tr>
+                                <tr><td class="h6 text-white">Department:</td><td class="text-white">@Model.Department</td></tr>
+                            </table>
+                        </p>
+                    </div>
+                    <div class="card-footer mt-0 pt-0 mx-auto">
+                        <a asp-action="Contact" asp-controller="Home" class="btn btn btn-dark btn-outline-light">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+</html>

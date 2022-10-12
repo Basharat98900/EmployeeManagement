@@ -1,0 +1,51 @@
+﻿@model List<UserRoleViewModel>
+@{
+    var roleID = ViewBag.RoleId;
+}
+<html>
+    <head>
+
+    </head>
+    <body class="bg-black">
+            <div class="container mt-3">
+                <form method="post">
+                    <div class="row">
+                        <div class="col-10 mx-auto">
+                            <div class="card">
+                                <div class="card-header">
+                                    <p class="h3">Add or Remove Users from this Role</p>
+                                </div>
+                                <div class="card-body">
+                                    @if(Model.Any()==null)
+                                    {
+                                        <p class="h5">None at the moment</p>
+                                    }
+                                    else{
+                                        for (int i = 0; i < Model.Count; i++)
+                                            {
+                                                <input class="form-check-input h6" asp-for="@Model[i].IsSelected">
+                                                <label class="form-check-label h6" asp-for="@Model[i].IsSelected">@Model[i].UserName</label><br />
+                                            }
+                                    }
+                                </div>
+                                <div class="card-footer">
+                                   <div class="row">
+                                <div class="col-6">
+                                    <div class="d-grid">
+                                        <button class="btn btn-dark d-block">Update</button>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                        <div class="d-grid">
+                                        <a asp-action="RoleEditView" asp-controller="Admin" asp-route-id="@roleID" class="btn btn-dark d-block">Cancel</a>
+                                        </div>
+                                </div>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </body>
+</html>

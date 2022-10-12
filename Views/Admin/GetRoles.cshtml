@@ -1,0 +1,45 @@
+﻿@model IQueryable<IdentityRole>
+
+
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body class="bg-black">
+        
+            <div class="col-6 mx-auto ps-3 mt-2 mb-3">
+            <p class="h4 text-light">All Roles</p>
+            <a asp-action="CreateRole" asp-controller="Admin" class="btn btn-dark">Add New Role</a>
+            </div>
+     
+        <div class="container col-6">
+            @foreach(var roles in Model)
+            {
+            <div class="card mb-5">
+                <div class="card-header">
+                    <p class="h6">RoleID: @roles.Id</p>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="h6">@roles.Name</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="d-grid">
+                                <a asp-action="RoleEditView" asp-controller="Admin" asp-route-id="@roles.Id" class="btn btn-dark d-block">Edit</a>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-grid">
+                                <button class="btn btn-dark d-block">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </body>
+</html>

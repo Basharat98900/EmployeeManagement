@@ -1,0 +1,167 @@
+﻿
+@model EF_DotNetCore.Models.Employee
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+   
+</head>
+<body class="bg-black">
+   
+    <div class="container-fluid bg-black">
+    <div class="row">
+        <div class="col-12">
+            <div id="demo" class="carousel slide mt-1" data-bs-ride="carousel">
+
+                <!-- Indicators/dots -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                </div>
+
+                <!-- The slideshow/carousel -->
+                <div class="carousel-inner ">
+                    <div class="carousel-item active">
+                        <img src="~/Photos/Image1.jpg" style="height:650px; " alt="Los Angeles" class=" rounded d-block   w-100 ">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Photos/Image2.jpg" style="height:650px;" alt="Chicago" class=" rounded d-block  w-100 ">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Photos/Image3.jpg" style="height:650px; " alt="New York" class=" rounded d-block    w-100">
+                    </div>
+                </div>
+
+                <!-- Left and right controls/icons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon "></span>
+                </button>
+                <button class="carousel-control-next " type="button" data-bs-target="#demo" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+       </div>
+    </div>
+   
+    @*<div class="row pt-2 ">
+        <div class="col-4  mx-auto">
+            <div id="demo1" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#demo1" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#demo1" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#demo1" data-bs-slide-to="2"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="~/Photos/Image1.jpg" style="height:300px;" class="rounded d-block mx-auto w-100" />
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Photos/Image2.jpg" style="height:300px;" class="rounded d-block mx-auto w-100" />
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Photos/Image3.jpg" style="height:300px;" class="rounded d-block m-auto w-100" />
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#demo1" data-bs-slide="prev">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#demo1" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+        <div class="col-4  mx-auto">
+            <div class="carousel slide" id="demo2" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#demo2" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#demo2" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#demo2" data-bs-slide-to="2"></button>
+                </div>
+                <div class="carousel-inner">
+                   <div class="carousel-item ">
+                        <img src="~/Photos/Image1.jpg" style="height:300px;" class="rounded d-block m-auto w-100" />
+                   </div>
+                    <div class="carousel-item active">
+                        <img src="~/Photos/Image2.jpg" style="height:300px;" class="rounded mx-auto w-100 d-block" />
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Photos/Image3.jpg" style="height:300px;" class="rounded mx-auto d-block w-100" />
+                    </div>
+                </div>
+                <button type="button" class="carousel-control-prev" data-bs-target="#demo2" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button type="button" class="carousel-control-next" data-bs-target="#demo2" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+        <div class="col-4 mx-auto">
+            <div id="demo3" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-slide-to="0" data-bs-target="#demo3" class="active"></button>
+                    <button type="button" data-bs-slide-to="1" data-bs-target="#demo3"></button>
+                    <button type="button" data-bs-slide-to="2" data-bs-target="#demo3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item">
+                        <img src="~/Photos/Image1.jpg" style="height:300px;" class="rounded mx-auto d-block w-100" />
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Photos/Image2.jpg" style="height:300px;" class="rounded mx-auto d-block w-100" />
+                    </div>
+                    <div class="carousel-item active">
+                        <img src="~/Photos/Image3.jpg" style="height:300px;" class="rounded mx-auto d-block w-100" />
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#demo3" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" style="height:300px;" data-bs-target="#demo3" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+    </div>*@
+   <div class="row mt-1">
+            @for (int i = 0; i < 3; i++)
+            {
+                
+                    string idName = "a" + i.ToString();
+                
+                <div class="col-4  mx-auto">
+
+                    <div id="@idName" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">                                                      
+                                <button type="button" data-bs-target="#@idName" data-bs-slide-to="0" class="active"></button>
+                                <button type="button" data-bs-target="#@idName" data-bs-slide-to="1"></button>
+                                <button type="button" data-bs-target="#@idName" data-bs-slide-to="2"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="~/Photos/Image1.jpg" style="height:300px;" class="rounded d-block mx-auto w-100" />
+                            </div>
+                            <div class="carousel-item">
+                                <img src="~/Photos/Image2.jpg" style="height:300px;" class="rounded d-block mx-auto w-100" />
+                            </div>
+                            <div class="carousel-item">
+                                <img src="~/Photos/Image3.jpg" style="height:300px;" class="rounded d-block m-auto w-100" />
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#@idName" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#@idName" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
+                </div>
+            }
+   </div>
+  </div>
+</body>
+</html>
