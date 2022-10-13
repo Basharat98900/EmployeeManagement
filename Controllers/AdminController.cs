@@ -1,4 +1,5 @@
 ﻿using EF_DotNetCore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace EF_DotNetCore.Controllers
 {
+    [Authorize(Roles ="Admin,User")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -32,12 +34,14 @@ namespace EF_DotNetCore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="Admin")]
         public IActionResult CreateRole()
         {
             return View();
         }
 
         [HttpPost]
+        
         public async Task<IActionResult> CreateRole(CreateRoleViewModel obj)
         {
             if (ModelState.IsValid)
@@ -64,6 +68,7 @@ namespace EF_DotNetCore.Controllers
         }
 
         [HttpGet]
+        
         public async Task<IActionResult> RoleEditView(string ID)
         {
             var role = await roleManager.FindByIdAsync(ID);
@@ -90,6 +95,7 @@ namespace EF_DotNetCore.Controllers
         }
 
         [HttpPost]
+        
         public async Task<IActionResult> RoleEditView(RoleEditModel model)
         {
             var role=await roleManager.FindByIdAsync(model.Id);
@@ -152,6 +158,7 @@ namespace EF_DotNetCore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditUserInRole(List<UserRoleViewModel> list,string ID)
         {
            var role = await roleManager.FindByIdAsync(ID);
