@@ -1,0 +1,44 @@
+﻿@model ApplicaitonUsers
+
+<html>
+    <head>
+
+    </head>
+    <body class="bg-black">
+        <div class="container col-8">
+                <form method="post">
+                        <div class="container">
+                            <p class="h3 text-light mb-3">Edit User</p>
+                            <label asp-for="Id" class="text-light form-label"></label>
+                            <input asp-for="Id" disabled class=" form-control" />
+                            <br />
+                            <label asp-for="Email" class="form-label text-light"></label>
+                            <input asp-for="Email" class="form-control " />
+                            <br />
+                            <label asp-for="UserName" class="form-label text-light"></label>
+                            <input asp-for="UserName" class="form-control " />
+                            <br />
+                            <label asp-for="gender" class="form-label text-light"></label>
+                            <select asp-for="gender" class="form-select " asp-items="@Html.GetEnumSelectList<Genders>()">
+                            <option value="">Please Select</option>    
+                            </select>
+                            <br />
+                            <button type="submit" class="btn btn-dark">Update</button>
+                            <a asp-action="ListOfUsers" asp-controller="Admin" class="btn btn-dark">Cancel</a>
+                          </div>
+                          <div class="card mt-4">
+                              <div class="card-header">
+                                  <p class="h3">Roles</p>
+
+                              </div>
+                              <div class="card-body">
+                                  @if(Mo)
+                              </div>
+                              <div class="card-footer">
+
+                              </div>
+                          </div>
+                </form>
+        </div>
+    </body>
+</html>
