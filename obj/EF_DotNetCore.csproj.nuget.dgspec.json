@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\VS 2022\\Project Solution\\New folder\\EF_DotNetCore_New\\EF_DotNetCore.csproj": {}
+    "C:\\VS 2022\\Project\\EF_DotNetCore\\EF_DotNetCore\\EF_DotNetCore.csproj": {}
   },
   "projects": {
-    "E:\\VS 2022\\Project Solution\\New folder\\EF_DotNetCore_New\\EF_DotNetCore.csproj": {
+    "C:\\VS 2022\\Project\\EF_DotNetCore\\EF_DotNetCore\\EF_DotNetCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\VS 2022\\Project Solution\\New folder\\EF_DotNetCore_New\\EF_DotNetCore.csproj",
+        "projectUniqueName": "C:\\VS 2022\\Project\\EF_DotNetCore\\EF_DotNetCore\\EF_DotNetCore.csproj",
         "projectName": "EF_DotNetCore",
-        "projectPath": "E:\\VS 2022\\Project Solution\\New folder\\EF_DotNetCore_New\\EF_DotNetCore.csproj",
-        "packagesPath": "C:\\Users\\Basharat Khan\\.nuget\\packages\\",
-        "outputPath": "E:\\VS 2022\\Project Solution\\New folder\\EF_DotNetCore_New\\obj\\",
+        "projectPath": "C:\\VS 2022\\Project\\EF_DotNetCore\\EF_DotNetCore\\EF_DotNetCore.csproj",
+        "packagesPath": "C:\\Users\\Basharat\\.nuget\\packages\\",
+        "outputPath": "C:\\VS 2022\\Project\\EF_DotNetCore\\EF_DotNetCore\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Basharat Khan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Basharat\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,7 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
@@ -89,12 +86,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.30, 3.1.30]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -103,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

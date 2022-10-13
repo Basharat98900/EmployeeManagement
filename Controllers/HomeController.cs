@@ -177,14 +177,14 @@ namespace EF_DotNetCore.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        
         public IActionResult Register(Employee obj)
         {
 

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<EF_DotNetCore.Models.ApplicaitonUsers>;
+
+
+<html>
+    <head>
+
+    </head>
+    <body class="bg-black">
+        <div class="container col-8">
+            <p class="h4 text-white mt-3">Create User</p>
+            <a asp-action="Register" asp-controller="Account" class="btn btn-outline-light mb-5">Create User</a>
+            @if(Model.Any())
+            {
+                foreach (var item in Model)
+            {
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <p class="h6 ">ID: @item.Id</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="h6 ">Name: @item.UserName</p>
+                        <p class="h6 ">Gender: @item.gender</p>
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="d-grid">
+                                    <button class="btn btn-dark">Edit</button>
+                                </div>
+                            </div>
+                                <div class="col-3">
+                                <div class="d-grid">
+                                    <button class="btn btn-dark">Delete</button>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            }
+            }
+            else
+            {
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <p class="h6 ">None at the moment</p>
+
+                </div>
+                <div class="card-footer">
+                </div>
+            </div>
+            }
+        </div>
+    </body>
+</html>

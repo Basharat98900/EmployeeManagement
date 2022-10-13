@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace EF_DotNetCore.Controllers
 {
-    [Authorize(Roles ="Admin,User")]
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -34,7 +34,6 @@ namespace EF_DotNetCore.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="Admin")]
         public IActionResult CreateRole()
         {
             return View();
@@ -92,7 +91,7 @@ namespace EF_DotNetCore.Controllers
                 ViewBag.ErrorMsg = $"Role witth ID: {ID} not found";
                 return View("ViewNotFound");
             }
-        }
+            }
 
         [HttpPost]
         
@@ -199,6 +198,12 @@ namespace EF_DotNetCore.Controllers
                 }
                 return RedirectToAction("RoleEditView", new {id=ID});
             }
+        }
+        public IActionResult ListOfUsers()
+        {
+
+            var userModel =usermanager.Users;
+            return View(userModel);
         }
     }
 }

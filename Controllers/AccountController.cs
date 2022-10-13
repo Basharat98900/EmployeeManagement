@@ -44,6 +44,10 @@ namespace EF_DotNetCore.Controllers
 
                 if (result.Succeeded)
                 {
+                    if(signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("ListOfUsers", "Admin");
+                    }
                     await signInManager.SignInAsync(user, isPersistent: true);
                     return RedirectToAction("Contact", "Home");
                 }
@@ -112,6 +116,12 @@ namespace EF_DotNetCore.Controllers
             {
                 return Json($"User with {user.Email} already exists");
             }
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
