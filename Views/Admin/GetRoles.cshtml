@@ -32,14 +32,26 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="d-grid">
-                                <button class="btn btn-dark d-block">Delete</button>
-                            </div>
+                            <form method="post" asp-action="DeleteRole" asp-controller="Admin" asp-route-id="@roles.Id">
+                                <div class="d-grid">
+
+                                    <span id="delete_@roles.Id"><a onclick="confirmDelete('@roles.Id',true)" href="javascript:void()" class="btn d-block btn-dark">Delete</a></span>
+
+                                    <span style="display:none;" id="confirmDelete_@roles.Id">
+                                        <span class="text-danger">Are you sure you want to Delete @roles.Name</span>
+                                        <button type="submit" class="btn btn-dark">Yes</button>
+                                        <a href="javascript:void();" onclick="confirmDelete('@roles.Id',false)" class="btn btn-dark">No</a>
+                                    </span>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
             }
         </div>
+        @section Scripts{
+            <script src="~/CustomJavaScript/JavaScript.js"></script>
+        }
     </body>
 </html>

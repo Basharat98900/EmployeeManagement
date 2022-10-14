@@ -1,6 +1,15 @@
 ﻿
 
 
-<h4 class="alert-danger">@ViewBag.ErrorMsg</h4>
-
-<a asp-action="Contact" asp-controller="Home" class="btn-link">Back to list</a>
+@if(ViewBag.ErrorTitle==null)
+{
+    <h4 class="alert-danger">@ViewBag.ErrorMsg</h4>
+    <hr class="text-white">
+    <a asp-action="Contact" asp-controller="Home" class="btn-link">Back to list</a>
+}  
+else{
+    <h4 class="alert-danger">@ViewBag.ErrorTitle</h4>
+    <h4 class="alert-danger">@ViewBag.ErrorMessage</h4>
+    <hr class="text-white">
+    <a asp-action="Contact" asp-controller="Home" class="btn-link">Back to list</a>
+}

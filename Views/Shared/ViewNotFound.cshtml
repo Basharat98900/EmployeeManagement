@@ -5,13 +5,24 @@
 <body class="bg-black">
     <div class="container mt-3">
         <div class="col-6 mx-auto border p-3 rounded border-light">
-            <p class="text-light h1"> View Not Found</p>
+            @if(ViewBag.ErrorTitle==null)
+            {
+                <p class="text-light h1"> View Not Found</p>
 
-            <div class="text-danger pt-3">
-                <p class="h3">@ViewBag.ErrorMsg</p>
-            </div>
+                <div class="text-danger pt-3">
+                    <p class="h3">@ViewBag.ErrorMsg</p>
+                </div>
+                <a asp-action="Contact" asp-controller="Home" class=" btn btn-outline-info">Back to Contact</a>
+            }
+            else{
+                <h4 class="text-danger">@ViewBag.ErrorTitle</h4>
+                <h4 class="text-danger">@ViewBag.ErrorMessage</h4>
+                <hr class="text-white">
+                <a asp-action="GetRoles" asp-controller="Admin" class=" btn btn-outline-info">Back to Roles</a>
 
-            <a asp-action="Contact" asp-controller="Home" class=" btn btn-outline-info">Back to Contact</a>
+            }
+
+            
         </div>
     </div>
 </body>

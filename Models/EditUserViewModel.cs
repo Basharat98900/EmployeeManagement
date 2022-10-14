@@ -5,6 +5,12 @@ namespace EF_DotNetCore.Models
 {
     public class EditUserViewModel
     {
+
+        public EditUserViewModel()
+        {
+            Roles = new List<string>();
+            Claims = new List<string>();    
+        }
         public string ID { get; set; }
 
         [Required]
@@ -15,7 +21,7 @@ namespace EF_DotNetCore.Models
 
         [Required]
         public Genders gender { get; set; }
-        public List<string> Roles { get; set; }
+        public IList<string> Roles { get; set; }
 
         public List<string> Claims { get; set; }
     }

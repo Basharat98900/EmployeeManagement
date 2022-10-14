@@ -48,6 +48,7 @@ namespace EF_DotNetCore
             }
             else
             {
+                app.UseExceptionHandler("/Error"); 
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");
             }
             app.UseStaticFiles();

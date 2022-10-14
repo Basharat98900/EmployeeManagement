@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization.Internal;
@@ -211,21 +212,125 @@ namespace EF_DotNetCore.Controllers
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
         {
-            var user =await usermanager.FindByIdAsync(id);
-            if(user == null)
+            var user = await usermanager.FindByIdAsync(id);
+            if (user == null)
             {
                 ViewBag.ErrorMsg = $"User with ID: {id} not found";
                 return View("ViewNotFound");
             }
             else
             {
-                var claim=await usermanager.GetClaimsAsync(user);
+                var claim = await usermanager.GetClaimsAsync(user);
                 var role = await usermanager.GetRolesAsync(user);
-                EditUser a = new EditUser();
+                EditUserViewModel a = new EditUserViewModel()
+                {
+                    ID = user.Id,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    Claims = claim.Select(c => c.Value).ToList(),
+                    Roles = role,
+                    gender = user.gender
+                };
 
-                return View(user);
+                return View(a);
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel obj)
+        {
+            var user = await usermanager.FindByIdAsync(obj.ID);
+            if (user == null)
+            {
+                ViewBag.ErrorMsg = $"User with ID: {obj.ID} cannot be found";
+                return View("ViewNotFound");
+            }
+            else
+            {
+                user.UserName = obj.UserName;
+                user.Email = obj.Email;
+                user.gender = obj.gender;
+
+                var result = await usermanager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListOfUsers", "Admin");
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user =await usermanager.FindByIdAsync(id);
+            if (user == null)
+            {
+                ViewBag.ErrorMsg = $"User with ID: {id} cannot be found";
+                return View("ViewNotFound");
+            }
+            else
+            {
+                var result = await usermanager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListOfUsers", "Admin");
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
+            }
+            return View("ListOfUsers");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            var role = await roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                ViewBag.ErrorMsg = $"Role with ID: {id} cannot be found";
+                return View("ViewNotFound");
+            }
+            else
+            {
+                try
+                {
+                    var result = await roleManager.DeleteAsync(role);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("GetRoles", "Admin");
+                    }
+                    else
+                    {
+                        foreach (var item in result.Errors)
+                        {
+                            ModelState.AddModelError("", item.Description);
+                        }
+                    }
+                    return View("GetRoles");
+                }
+                catch (DbUpdateException ex)
+                {
+                    ViewBag.ErrorTitle = $"{role.Name} is in Use";
+                    ViewBag.ErrorMessage = $"{role.Name} role cannot be deleted as there are users in this role. If you want to delete this role, please remove the users from the role and then try to delete";
+                    return View("ViewNotFound");
+                }
+            }
+            
+        }
+       
     }
 }

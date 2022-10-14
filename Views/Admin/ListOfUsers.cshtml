@@ -30,9 +30,18 @@
                                 </div>
                             </div>
                                 <div class="col-3">
+                                <form method="post" asp-action="DeleteUser" asp-controller="Admin" asp-route-id="@item.Id">
                                 <div class="d-grid">
-                                    <button class="btn btn-dark">Delete</button>
+
+                                   <span id="delete_@item.Id"><a onclick="confirmDelete('@item.Id',true)" href="javascript:void()" class="btn d-block btn-dark">Delete</a></span>
+
+                                        <span style="display:none;" id="confirmDelete_@item.Id">
+                                            <span class="text-danger">Are you sure you want to Delete @item.UserName</span>
+                                            <button type="submit" class="btn btn-dark">Yes</button>
+                                            <a href="javascript:void();" onclick="confirmDelete('@item.Id',false)" class="btn btn-dark">No</a>
+                                        </span>
                                 </div>
+                                </form>
                             </div>
                            
                         </div>
@@ -54,5 +63,8 @@
             </div>
             }
         </div>
+        @section Scripts{
+            <script src="~/CustomJavaScript/JavaScript.js"></script>
+        }
     </body>
 </html>

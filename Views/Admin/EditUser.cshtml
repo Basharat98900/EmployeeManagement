@@ -1,4 +1,4 @@
-﻿@model ApplicaitonUsers
+﻿@model EditUserViewModel
 
 <html>
     <head>
@@ -8,23 +8,31 @@
         <div class="container col-8">
                 <form method="post">
                         <div class="container">
-                            <p class="h3 text-light mb-3">Edit User</p>
-                            <label asp-for="Id" class="text-light form-label"></label>
-                            <input asp-for="Id" disabled class=" form-control" />
+                            <p class="h3 text-light mt-2 mb-3">Edit User</p>
+                            <hr class="text-white" />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                            <label asp-for="ID" class="text-light form-label"></label>
+                            <input asp-for="ID" disabled class=" form-control" />
+                            
                             <br />
                             <label asp-for="Email" class="form-label text-light"></label>
                             <input asp-for="Email" class="form-control " />
+                            <span asp-validation-for="Email" class="text-danger"></span>
                             <br />
                             <label asp-for="UserName" class="form-label text-light"></label>
                             <input asp-for="UserName" class="form-control " />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
                             <br />
+
                             <label asp-for="gender" class="form-label text-light"></label>
                             <select asp-for="gender" class="form-select " asp-items="@Html.GetEnumSelectList<Genders>()">
                             <option value="">Please Select</option>    
                             </select>
+                            <span asp-validation-for="gender" class="text-danger"></span>
                             <br />
                             <button type="submit" class="btn btn-dark">Update</button>
                             <a asp-action="ListOfUsers" asp-controller="Admin" class="btn btn-dark">Cancel</a>
+                <hr class="text-white" />
                           </div>
                           <div class="card mt-4">
                               <div class="card-header">
@@ -32,12 +40,46 @@
 
                               </div>
                               <div class="card-body">
-                                  @if(Mo)
+                                  @if(Model.Roles==null)
+                                  { 
+                                      <p class="h4">None at the moment</p>
+
+                                  }
+                                  else{
+                                      foreach (var item in Model.Roles)
+                                        {
+                                            <p class="h4">@item</p>
+                                         }
+                                  }
                               </div>
                               <div class="card-footer">
-
+                                  <button class="btn btn-dark">Manage Roles</button>
                               </div>
                           </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <p class="h3">Claims</p>
+
+                </div>
+                <div class="card-body">
+                    @if (!Model.Claims.Any())
+                    {
+                        <p class="h4">None at the moment</p>
+
+                    }
+                    else
+                    {
+                        foreach (var item in Model.Claims)
+                        {
+                            <p class="h4">@item</p>
+                        }
+                    }
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-dark">Manage Claims</button>
+                </div>
+            </div>
                 </form>
         </div>
     </body>
