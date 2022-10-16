@@ -331,6 +331,65 @@ namespace EF_DotNetCore.Controllers
             }
             
         }
-       
+        [HttpGet]
+        public async Task<IActionResult> EditUserRoles(string id)
+        {
+            ViewBag.UserID = id;
+            var user =await usermanager.FindByIdAsync(id);
+            if(user == null)
+            {
+                ViewBag.ErrorMsg = $"User with UserID: {id} cannot be found";
+                return View("ViewNotFound");
+            }
+            else
+            {
+                var model = new List<UserRolesModel>();
+                foreach (var item in roleManager.Roles.ToList())
+                {
+                    var userrolemodel = new UserRolesModel()
+                    {
+                        RoleName = item.Name,
+                        RoleID = item.Id
+                    };
+                    if (await usermanager.IsInRoleAsync(user, userrolemodel.RoleName))
+                    {
+                        userrolemodel.IsSelected = true;
+                    }
+                    else
+                    {
+                        userrolemodel.IsSelected = false;
+                    }
+                    model.Add(userrolemodel);
+                }
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUserRoles(List<UserRolesModel> list,string id)
+        {
+            var user = await usermanager.FindByIdAsync(id); 
+            if(user==null)
+            {
+                ViewBag.ErrorMsg = $"User with the UserID:{id} not found";
+                return View("ViewNotFound");
+            }
+            var roles=await usermanager.GetRolesAsync(user);
+            var result =await usermanager.RemoveFromRolesAsync(user, roles);
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "cannot reomve user from existing role");
+                return View(list);
+            }
+            result = await usermanager.AddToRolesAsync(user, list.Where(x => x.IsSelected).Select(x => x.RoleName));
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "cannot add selected user to roles");
+                return View(list); 
+            }
+            return RedirectToAction("EditUser", new {ID=id});
+        }
+
+
     }
 }

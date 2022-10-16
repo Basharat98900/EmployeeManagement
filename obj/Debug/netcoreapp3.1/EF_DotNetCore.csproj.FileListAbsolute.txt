@@ -301,3 +301,4 @@ E:\VS 2022\Project Solution\New folder\EF_DotNetCore_New\obj\Debug\netcoreapp3.1
 C:\VS 2022\Project\EF_DotNetCore\EF_DotNetCore\obj\Debug\netcoreapp3.1\Razor\Views\Account\AccessDenied.cshtml.g.cs
 C:\VS 2022\Project\EF_DotNetCore\EF_DotNetCore\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ListOfUsers.cshtml.g.cs
 C:\VS 2022\Project\EF_DotNetCore\EF_DotNetCore\obj\Debug\netcoreapp3.1\Razor\Views\Admin\EditUser.cshtml.g.cs
+C:\VS 2022\Project\EF_DotNetCore\EF_DotNetCore\obj\Debug\netcoreapp3.1\Razor\Views\Admin\EditUserRoles.cshtml.g.cs
