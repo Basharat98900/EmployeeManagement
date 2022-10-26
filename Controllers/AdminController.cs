@@ -346,7 +346,8 @@ namespace EF_DotNetCore.Controllers
             }
             
         }
-        [HttpGet]
+        [HttpGet("EditUserRoles/id")]
+        [Authorize(Policy = "RolePolicy")]
         public async Task<IActionResult> EditUserRoles(string id)
         {
             ViewBag.UserID = id;
@@ -381,6 +382,9 @@ namespace EF_DotNetCore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "RolePolicy")]
+
+
         public async Task<IActionResult> EditUserRoles(List<UserRolesModel> list,string id)
         {
             var user = await usermanager.FindByIdAsync(id); 

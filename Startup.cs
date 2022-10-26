@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using EF_DotNetCore.Security;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EF_DotNetCore
 {
@@ -42,12 +44,28 @@ namespace EF_DotNetCore
             context.User.HasClaim(c => c.Type == "Create Role" && c.Value == "true") ||
             context.User.IsInRole("SuperAdmin")));
 
-            options.AddPolicy("EditRolePolicy",policy =>
-            policy.RequireAssertion(context => context.User.IsInRole("Admin") &&
-            context.User.HasClaim(c => c.Type == "Edit Role" && c.Value == "true") ||
-            context.User.IsInRole("SuperAdmin")));
+                options.AddPolicy("EditRolePolicy", policy =>
+                policy.RequireAssertion(context => context.User.IsInRole("Admin") &&
+                context.User.HasClaim(c => c.Type == "Edit Role" && c.Value == "true") ||
+                context.User.IsInRole("SuperAdmin")));
 
             });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RolePolicy", policy =>
+                    policy.AddRequirements(new ManageAdminRolesAndClaimRequirement()));
+            });
+
+            services.AddSingleton<IAuthorizationHandler,
+                CanEditOnlyOtherAdminRolesAndClaimsHandler>();
+
+            //services.AddAuthorization(options =>
+            //options.AddPolicy("EditRolePolicy",policy=>
+            //policy.AddRequirements(new ManageAdminRolesAndClaimRequirement()))
+
+            //);
+            //services.AddSingleton<IAuthorizationHandler,CanEditOnlyOtherAdminRolesAndClaimsHandler>();
             services.AddScoped<IMockEmployeeRepository, SQLEmployeeRepository>();
             services.AddIdentity<ApplicaitonUsers, IdentityRole>().AddEntityFrameworkStores<EmployessDBContext>();
             services.AddMvc(cofig =>
@@ -66,6 +84,7 @@ namespace EF_DotNetCore
             }
             else
             {
+                                       
                 app.UseExceptionHandler("/Error"); 
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");
             }
