@@ -33,7 +33,8 @@
             <a class="nav-link dropdown-toggle text-decoration-none" href="#" role="button" data-bs-toggle="dropdown">Dropdown</a>
                 <ul class="dropdown-menu">
                 <li><a class="dropdown-item text-decoration-none" asp-action="Register" asp-controller="Account" >RegisterUser</a></li>
-                @if(siginManager.IsSignedIn(User) && User.IsInRole("Admin")){
+                        @if (siginManager.IsSignedIn(User) && User.IsInRole("Admin") || siginManager.IsSignedIn(User) && User.IsInRole("SuperAdmin"))
+                        {
                             <li><a class="dropdown-item text-decoration-none" asp-action="GetRoles" asp-controller="Admin">Get Role</a></li>
                             <li><a class="dropdown-item text-decoration-none" asp-action="ListOfUsers" asp-controller="Admin">List Of Users</a></li>
                 }

@@ -24,6 +24,7 @@ namespace EF_DotNetCore.Models
                 .HasNoKey();
             foreach (var item in modelBuilder.Model.GetEntityTypes().SelectMany(e=>e.GetForeignKeys()))
             {
+                
                 item.DeleteBehavior=DeleteBehavior.Restrict;
             }
             

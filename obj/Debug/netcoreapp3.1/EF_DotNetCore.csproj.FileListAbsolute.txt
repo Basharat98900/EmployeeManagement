@@ -302,3 +302,4 @@ C:\VS 2022\Project\EF_DotNetCore\EF_DotNetCore\obj\Debug\netcoreapp3.1\Razor\Vie
 C:\VS 2022\Project\EF_DotNetCore\EF_DotNetCore\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ListOfUsers.cshtml.g.cs
 C:\VS 2022\Project\EF_DotNetCore\EF_DotNetCore\obj\Debug\netcoreapp3.1\Razor\Views\Admin\EditUser.cshtml.g.cs
 C:\VS 2022\Project\EF_DotNetCore\EF_DotNetCore\obj\Debug\netcoreapp3.1\Razor\Views\Admin\EditUserRoles.cshtml.g.cs
+C:\VS 2022\Project\EF_DotNetCore\EF_DotNetCore\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ManageClaim.cshtml.g.cs

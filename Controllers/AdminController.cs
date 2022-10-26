@@ -7,14 +7,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization.Internal;
+using Microsoft.VisualStudio.Web.CodeGeneration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EF_DotNetCore.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,SuperAdmin")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -35,13 +37,14 @@ namespace EF_DotNetCore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy ="CreateRolePolicy")]
         public IActionResult CreateRole()
         {
             return View();
         }
 
         [HttpPost]
-
+        [Authorize(Policy = "CreateRolePolicy")]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel obj)
         {
             if (ModelState.IsValid)
@@ -68,7 +71,7 @@ namespace EF_DotNetCore.Controllers
         }
 
         [HttpGet]
-
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> RoleEditView(string ID)
         {
             var role = await roleManager.FindByIdAsync(ID);
@@ -95,6 +98,7 @@ namespace EF_DotNetCore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy ="EditRolePolicy")]
 
         public async Task<IActionResult> RoleEditView(RoleEditModel model)
         {
@@ -227,7 +231,7 @@ namespace EF_DotNetCore.Controllers
                     ID = user.Id,
                     Email = user.Email,
                     UserName = user.UserName,
-                    Claims = claim.Select(c => c.Value).ToList(),
+                    Claims = claim.Select(c =>c.Type+": "+ c.Value).ToList(),
                     Roles = role,
                     gender = user.gender
                 };
@@ -278,17 +282,27 @@ namespace EF_DotNetCore.Controllers
             }
             else
             {
-                var result = await usermanager.DeleteAsync(user);
-                if (result.Succeeded)
+                try
                 {
-                    return RedirectToAction("ListOfUsers", "Admin");
-                }
-                else
-                {
-                    foreach (var item in result.Errors)
+                    var result = await usermanager.DeleteAsync(user);
+                    if (result.Succeeded)
                     {
-                        ModelState.AddModelError("", item.Description);
+                        return RedirectToAction("ListOfUsers", "Admin");
                     }
+                    else
+                    {
+                        foreach (var item in result.Errors)
+                        {
+                            ModelState.AddModelError("", item.Description);
+                        }
+                    }
+                }
+                catch(DbUpdateException ex)
+                {
+                    ViewBag.ErrorTitle = $"{user.UserName} has a role";
+                    ViewBag.ErrorMessage = "Cannot delete a User who has a role or Claim";
+                    
+                    return View("ViewNotFound");
                 }
             }
             return View("ListOfUsers");
@@ -296,6 +310,7 @@ namespace EF_DotNetCore.Controllers
 
 
         [HttpPost]
+        [Authorize(Policy = "DeleteRolePolicy")]
         public async Task<IActionResult> DeleteRole(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
@@ -388,6 +403,65 @@ namespace EF_DotNetCore.Controllers
                 return View(list); 
             }
             return RedirectToAction("EditUser", new {ID=id});
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ManageClaim(string id)
+        {
+            var user = await usermanager.FindByIdAsync(id);
+            if (user == null)
+            {
+                ViewBag.ErrorMsg = $"User with ID: {id} not found";
+                return View("ViewNotFound");
+            }
+            var userClaims=await usermanager.GetClaimsAsync(user);
+            var model = new ClaimsViewModel();
+            model.UserID = id;
+            foreach (var item in ClaimStore.AllClaims)
+            {
+                var obj = new UserClaim();
+                obj.ClaimType = item.Type;
+                
+                if (userClaims.Any(c => c.Type == item.Type && c.Value=="true"))
+                {
+                    obj.IsSelected = true;
+                    
+                }
+                
+                model.Cliam.Add(obj);
+
+                
+            }
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ManageClaim(ClaimsViewModel model)
+        {
+            var user = await usermanager.FindByIdAsync(model.UserID);
+            if(user==null)
+            {
+                ViewBag.ErrorMsg = $"User with ID: {model.UserID} not found";
+                return View("ViewNotFound");
+            }
+
+            var claims = await usermanager.GetClaimsAsync(user);
+            var result = await usermanager.RemoveClaimsAsync(user, claims);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot remove user form existing claim");
+                return View(model);
+
+            }
+            result = await usermanager.AddClaimsAsync(user, model.Cliam.Select(c => new Claim ( c.ClaimType, c.IsSelected ?"true":"false" )));
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot add selected claims to user");
+                return View(model);
+            }
+            return RedirectToAction("EditUser",new {id=model.UserID});
         }
 
 

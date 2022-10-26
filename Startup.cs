@@ -23,13 +23,31 @@ namespace EF_DotNetCore
         {
             _config=config;
         }
-        
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
-        {   
-            services.AddDbContextPool<EmployessDBContext>(options=>options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
-            services.AddMvc(options=>options.EnableEndpointRouting=false);
+        {
+            services.AddDbContextPool<EmployessDBContext>(options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
+            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddAuthorization(options =>
+            {
+            options.AddPolicy("DeleteRolePolicy", policy =>
+            policy.RequireAssertion(context => context.User.IsInRole("Admin") &&
+            context.User.HasClaim(c => c.Type == "Delete Role" && c.Value == "true") ||
+            context.User.IsInRole("SuperAdmin")));
+
+            options.AddPolicy("CreateRolePolicy", policy =>
+            policy.RequireAssertion(context => context.User.IsInRole("Admin") &&
+            context.User.HasClaim(c => c.Type == "Create Role" && c.Value == "true") ||
+            context.User.IsInRole("SuperAdmin")));
+
+            options.AddPolicy("EditRolePolicy",policy =>
+            policy.RequireAssertion(context => context.User.IsInRole("Admin") &&
+            context.User.HasClaim(c => c.Type == "Edit Role" && c.Value == "true") ||
+            context.User.IsInRole("SuperAdmin")));
+
+            });
             services.AddScoped<IMockEmployeeRepository, SQLEmployeeRepository>();
             services.AddIdentity<ApplicaitonUsers, IdentityRole>().AddEntityFrameworkStores<EmployessDBContext>();
             services.AddMvc(cofig =>

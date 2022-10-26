@@ -1,18 +1,22 @@
 ﻿@model IQueryable<IdentityRole>
-
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizeservice
 
 <html>
     <head>
         <title></title>
     </head>
     <body class="bg-black">
-        
-            <div class="col-6 mx-auto ps-3 mt-2 mb-3">
+        @if((await authorizeservice.AuthorizeAsync(User,"CreateRolePolicy")).Succeeded)
+        {
+        <div class="col-6 mx-auto ps-3 mt-2 ">
             <p class="h4 text-light">All Roles</p>
             <a asp-action="CreateRole" asp-controller="Admin" class="btn btn-dark">Add New Role</a>
-            </div>
+        </div>
+        }
+            
      
-        <div class="container col-6">
+        <div class="container col-6 mt-3">
             @foreach(var roles in Model)
             {
             <div class="card mb-5">
@@ -27,23 +31,30 @@
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-6">
-                            <div class="d-grid">
-                                <a asp-action="RoleEditView" asp-controller="Admin" asp-route-id="@roles.Id" class="btn btn-dark d-block">Edit</a>
-                            </div>
+                            @if((await authorizeservice.AuthorizeAsync(User,"EditRolePolicy")).Succeeded)
+                            {
+                                <div class="d-grid">
+                                    <a asp-action="RoleEditView" asp-controller="Admin" asp-route-id="@roles.Id" class="btn btn-dark d-block">Edit</a>
+                                </div>
+                            }
                         </div>
                         <div class="col-6">
-                            <form method="post" asp-action="DeleteRole" asp-controller="Admin" asp-route-id="@roles.Id">
-                                <div class="d-grid">
+                            @if((await authorizeservice.AuthorizeAsync(User,"DeleteRolePolicy")).Succeeded)
+                            {
+                                <form method="post" asp-action="DeleteRole" asp-controller="Admin" asp-route-id="@roles.Id">
+                                    <div class="d-grid">
 
-                                    <span id="delete_@roles.Id"><a onclick="confirmDelete('@roles.Id',true)" href="javascript:void()" class="btn d-block btn-dark">Delete</a></span>
+                                        <span id="delete_@roles.Id"><a onclick="confirmDelete('@roles.Id',true)" href="javascript:void()" class="btn d-block btn-dark">Delete</a></span>
 
-                                    <span style="display:none;" id="confirmDelete_@roles.Id">
-                                        <span class="text-danger">Are you sure you want to Delete @roles.Name</span>
-                                        <button type="submit" class="btn btn-dark">Yes</button>
-                                        <a href="javascript:void();" onclick="confirmDelete('@roles.Id',false)" class="btn btn-dark">No</a>
-                                    </span>
-                                </div>
-                            </form>
+                                        <span style="display:none;" id="confirmDelete_@roles.Id">
+                                            <span class="text-danger">Are you sure you want to Delete @roles.Name</span>
+                                            <button type="submit" class="btn btn-dark">Yes</button>
+                                            <a href="javascript:void();" onclick="confirmDelete('@roles.Id',false)" class="btn btn-dark">No</a>
+                                        </span>
+                                    </div>
+                                </form>
+                            }
+                            
                         </div>
                     </div>
                 </div>
