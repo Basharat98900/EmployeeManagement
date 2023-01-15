@@ -37,7 +37,11 @@
                         {
                             <li><a class="dropdown-item text-decoration-none" asp-action="GetRoles" asp-controller="Admin">Get Role</a></li>
                             <li><a class="dropdown-item text-decoration-none" asp-action="ListOfUsers" asp-controller="Admin">List Of Users</a></li>
-                }
+                        }
+                        else if(siginManager.IsSignedIn(User)){
+                            <li><a class="dropdown-item text-decoration-none" asp-action="ChangePassword" asp-controller="Account">Password</a></li>
+
+                        }
                 
                 </ul>
             </li>

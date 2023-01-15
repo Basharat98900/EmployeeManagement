@@ -9,7 +9,7 @@ namespace EF_DotNetCore.Models
         [Required]
         [EmailAddress]
         [Remote("EmailInUse","Account")]
-        [ValidEmailDomain(alloweddomain:"abc.com",ErrorMessage ="Provided domain is not correct use 'abc.com'")]
+        [ValidEmailDomain(alloweddomain:"gmail.com",ErrorMessage ="Provided domain is not correct use 'abc.com'")]
         public string UserName { get; set; }
 
         [Required]

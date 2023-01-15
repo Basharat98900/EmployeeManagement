@@ -13,6 +13,8 @@ using EF_DotNetCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Drawing;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
+using EF_DotNetCore.Security;
 
 namespace EF_DotNetCore.Controllers
 {
@@ -21,26 +23,40 @@ namespace EF_DotNetCore.Controllers
         private IMockEmployeeRepository _employeeRepository;
 
         private IWebHostEnvironment _hostingEnvironment;
-        public HomeController(IMockEmployeeRepository employeeRepository,IWebHostEnvironment hostingEnvironment)
+
+        private IDataProtector protector;
+        public HomeController(IMockEmployeeRepository employeeRepository,
+            IWebHostEnvironment hostingEnvironment,
+            DataProtectionPurposeStrings dataProtectionPurposeStrings,
+            IDataProtectionProvider dataProtectionProvider)
         {
             _employeeRepository = employeeRepository;
             _hostingEnvironment = hostingEnvironment;
+            protector=dataProtectionProvider.CreateProtector(dataProtectionPurposeStrings._dataProtectionPurposeStrings);
         }
-        public IActionResult Details(int ID)
+
+        public int unEncryptionID(string id)
         {
-            Employee emp = _employeeRepository.getEmployeeWithID(ID);
+            string unEncryptID=protector.Unprotect(id);
+            return Convert.ToInt32(unEncryptID);
+        }
+        public IActionResult Details(string ID)
+        {
+            Employee emp = _employeeRepository.getEmployeeWithID(unEncryptionID(ID));
             if(emp == null)
             {
                 Response.StatusCode = 404;
-                return View("EmployeeNotFound",ID);
+                return View("EmployeeNotFound",unEncryptionID(ID));
             }
             return View(emp);
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public IActionResult Update(string id)
         {
-            Employee emp = _employeeRepository.getEmployeeWithID(id);
+            string unEncryptId=protector.Unprotect(id);
+            int ID = Convert.ToInt32(unEncryptId);
+            Employee emp = _employeeRepository.getEmployeeWithID(ID);
             UpdateEmployee updEmp = new UpdateEmployee();
             updEmp.ID = emp.ID;
             updEmp.Name = emp.Name;
@@ -52,9 +68,9 @@ namespace EF_DotNetCore.Controllers
             return View(updEmp);
         }
         [HttpPost]
-        public IActionResult Update(UpdateEmployee obj)
+        public IActionResult Update(UpdateEmployee obj,string ID)
         {
-            Employee emp = _employeeRepository.getEmployeeWithID(obj.ID);
+            Employee emp = _employeeRepository.getEmployeeWithID(unEncryptionID(ID));
             {
                 emp.Name = obj.Name;
                 emp.Address = obj.Address;
@@ -79,9 +95,9 @@ namespace EF_DotNetCore.Controllers
             _employeeRepository.Update(emp);
             return RedirectToAction("Contact");
         }
-        public IActionResult Delete(int ID)
+        public IActionResult Delete(string ID)
         {
-            IEnumerable<Employee> obj = _employeeRepository.GetAllEmployees().Where(empid=>empid.ID==ID);
+            IEnumerable<Employee> obj = _employeeRepository.GetAllEmployees().Where(empid=>empid.ID==unEncryptionID(ID));
             Employee emp=obj.First();
             string filePath = Path.Combine(_hostingEnvironment.WebRootPath, "Images", emp.PhotoPath);
             System.IO.File.Delete(filePath);
@@ -172,7 +188,11 @@ namespace EF_DotNetCore.Controllers
         [HttpGet]
         public IActionResult Contact()
         {
-            IEnumerable<Employee> obj= _employeeRepository.GetAllEmployees();
+            IEnumerable<Employee> obj= _employeeRepository.GetAllEmployees().Select(e=>
+            {
+                e.EncryptedId = protector.Protect(e.ID.ToString());
+                return e;
+            });
             return View(obj);
         }
 

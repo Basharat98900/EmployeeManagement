@@ -1,0 +1,61 @@
+﻿@model Login_Google
+
+<html>
+<head>
+    <title>
+    </title>
+</head>
+<body class="bg-black">
+
+    <div class="container ">
+        <div class="row mt-5 ">
+            <div class="col-5 p-5 border border-white border-1 rounded-3 m-auto">
+                <form class="mt-2 " method="post">
+                    <p class="h3 mt-0 pb-5 pt-0 text-light">Login</p>
+                    <div class="container text-danger" asp-validation-summary="All"></div>
+                    <label asp-for="email" class="form-label text-white"></label>
+                    <input asp-for="email" placeholder="UserName" class="form-control" />
+                    <span class="text-danger" asp-validation-for="email"></span>
+                    <br />
+                    <br />
+                    <label asp-for="Password" class="form-label text-white"></label>
+                    <input asp-for="Password" placeholder="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <br />
+
+                    <div class="form-check">
+                        <input type="checkbox" asp-for="RememberMe" class="form-check-input" />
+                        <label asp-for="RememberMe" class="form-check-label text-white"></label>
+                    </div>
+                    <span asp-validation-for="RememberMe" class="text-danger"></span>
+                    <br />
+
+                    <br />
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-dark btn-block ">Submit</button>                        
+                    </div>
+                    <a asp-action="ForgotPassword" asp-controller="Account">ForgotPassword</a>
+                </form>
+                <form method="post" asp-action="ExternalLogins">
+                    @if (Model.ExternalLogins.Count == 0)
+                    {
+                        <h5>No Providers</h5>
+                    }
+                    else
+                    {
+                        foreach (var item in Model.ExternalLogins)
+                        {
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-block mt-3" type="submit" name="provider" title="Login using your @item.DisplayName account" value="@item.Name">@item.DisplayName</button>
+
+                            </div>
+                        }
+                    }
+                </form>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+</html>

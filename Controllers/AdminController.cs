@@ -381,7 +381,7 @@ namespace EF_DotNetCore.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("EditUserRoles/id")]
         [Authorize(Policy = "RolePolicy")]
 
 

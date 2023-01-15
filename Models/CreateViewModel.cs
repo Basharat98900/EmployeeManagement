@@ -19,7 +19,7 @@ namespace EF_DotNetCore.Models
         [Required(ErrorMessage = "DOB is Required")]
         public string DateOfBirth { get; set; }
 
-        [Required]
+        
         public IFormFile Photo { get;set; }
 
         [Required]

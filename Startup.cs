@@ -51,12 +51,29 @@ namespace EF_DotNetCore
 
             });
 
+            services.AddAuthentication()
+                .AddGoogle(options =>
+            {
+                options.ClientId = "545998292400-0kv52jhpa8p0amhfj5k8u2digrd2ifqt.apps.googleusercontent.com";
+                options.ClientSecret = "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";
+            })
+                .AddFacebook(options =>
+                {
+                    options.ClientId = "1564147514034376";
+                    options.ClientSecret = "8fe27ab83b3f6b279487d83f29d496f9";
+                }
+                
+            );
+            
+                
+
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RolePolicy", policy =>
                     policy.AddRequirements(new ManageAdminRolesAndClaimRequirement()));
             });
-
+            services.AddSingleton<IAuthorizationHandler, ManageSuperAdmin>();
             services.AddSingleton<IAuthorizationHandler,
                 CanEditOnlyOtherAdminRolesAndClaimsHandler>();
 
@@ -67,12 +84,30 @@ namespace EF_DotNetCore
             //);
             //services.AddSingleton<IAuthorizationHandler,CanEditOnlyOtherAdminRolesAndClaimsHandler>();
             services.AddScoped<IMockEmployeeRepository, SQLEmployeeRepository>();
-            services.AddIdentity<ApplicaitonUsers, IdentityRole>().AddEntityFrameworkStores<EmployessDBContext>();
+            services.AddIdentity<ApplicaitonUsers, IdentityRole>(options=>
+            {
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+                //options.SignIn.RequireConfirmedEmail = true;
+            }
+                
+                ).AddEntityFrameworkStores<EmployessDBContext>().AddDefaultTokenProviders()
+                .AddTokenProvider<CustomEmailConfirmationTokenProvider<ApplicaitonUsers>>("");
+
+            services.Configure<DataProtectionTokenProviderOptions>(o =>
+            {
+                o.TokenLifespan = TimeSpan.FromHours(6);
+            }
+
+            );
+            services.Configure<CustomEmailConfirmationTokenProviderOptions>(o =>
+            o.TokenLifespan = TimeSpan.FromDays(3));
             services.AddMvc(cofig =>
             {
                 var policy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 cofig.Filters.Add(new AuthorizeFilter(policy));
             });
+            services.AddSingleton<DataProtectionPurposeStrings>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

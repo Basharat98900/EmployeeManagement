@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EF_DotNetCore.Models
 {
@@ -9,6 +10,10 @@ namespace EF_DotNetCore.Models
     {
        
         public int? ID { get; set; }
+
+        [NotMapped]
+        public string EncryptedId { get; set; }
+
 
         [Required(ErrorMessage ="Name is Required"),MaxLength(40,ErrorMessage ="Name can contain Max 40 char"),MinLength(3,ErrorMessage ="Name should have atleast 3 char")]
         public string Name { get; set; }

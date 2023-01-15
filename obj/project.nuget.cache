@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "tgkHbyxSWPosPj9p7J7DeYHutJVSvQIgfSNefKF+md+LwROyhEofvFeI08gQvpQ4LctvVg2ypR6ANWN5fnvHLA==",
+  "dgSpecHash": "VL4LfOYT7j4Pzubx7EMoLrd4QB9adKM9zVo0StftRQgo6aVnrx5QB2EFaMGAaJq+MIcLNpwKLl9dsiDr2ijLwg==",
   "success": true,
   "projectFilePath": "C:\\VS 2022\\Project\\EF_DotNetCore\\EF_DotNetCore\\EF_DotNetCore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Basharat\\.nuget\\packages\\jquery\\1.8.0\\jquery.1.8.0.nupkg.sha512",
     "C:\\Users\\Basharat\\.nuget\\packages\\jquery.validation\\1.19.5\\jquery.validation.1.19.5.nupkg.sha512",
     "C:\\Users\\Basharat\\.nuget\\packages\\jquery.validation.unobtrusive\\2.0.20710\\jquery.validation.unobtrusive.2.0.20710.nupkg.sha512",
+    "C:\\Users\\Basharat\\.nuget\\packages\\microsoft.aspnetcore.authentication.facebook\\3.1.0\\microsoft.aspnetcore.authentication.facebook.3.1.0.nupkg.sha512",
+    "C:\\Users\\Basharat\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\3.1.0\\microsoft.aspnetcore.authentication.google.3.1.0.nupkg.sha512",
     "C:\\Users\\Basharat\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.0\\microsoft.aspnetcore.cryptography.internal.3.1.0.nupkg.sha512",
     "C:\\Users\\Basharat\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.0\\microsoft.aspnetcore.cryptography.keyderivation.3.1.0.nupkg.sha512",
     "C:\\Users\\Basharat\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
