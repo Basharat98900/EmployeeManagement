@@ -22,7 +22,8 @@ namespace EF_DotNetCore.Models
         
         public IFormFile Photo { get;set; }
 
-        [Required]
+       
+        [Range(0,3,ErrorMessage ="Department is required")]
         public Dept? Department { get; set; }
 
     }

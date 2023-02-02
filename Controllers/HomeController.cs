@@ -126,7 +126,7 @@ namespace EF_DotNetCore.Controllers
                 employee.Salary = createViewModel.Salary;
                 _employeeRepository.Add(employee);
             } 
-                return (View("Index"));
+                return RedirectToAction("Contact");
         }
 
         public void ImageResize(IFormFile file,string imagePath)

@@ -213,6 +213,7 @@ namespace EF_DotNetCore.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+
         public async Task<IActionResult> Login_ExternalProviders(string returnUrl)
         {
             Login_Google obj = new Login_Google()
@@ -225,6 +226,7 @@ namespace EF_DotNetCore.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+       
         public async Task<IActionResult> Login_ExternalProviders(Login_Google obj,string returnUrl)
         {
             obj.ExternalLogins=(await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -234,15 +236,19 @@ namespace EF_DotNetCore.Controllers
                 if (user !=null && !user.EmailConfirmed && (await userManager.CheckPasswordAsync(user, obj.Password)))
                 {
                     ModelState.AddModelError("","Email not confirmed yet check your email");
-                    //var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var confrimationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
+                    var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var confrimationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
                     //bool ismailSend = SendEmail(user.Email, confrimationLink);
-                    //logger.LogInformation("\n"+ismailSend);
+                    //logger.LogInformation("\n" + ismailSend);
+                    logger.LogInformation(confrimationLink);
                     return View(obj);
                 }
-
-                var result = await signInManager.PasswordSignInAsync(user,obj.Password,obj.RememberMe,false);
-                if (result.Succeeded)
+                Microsoft.AspNetCore.Identity.SignInResult result=null;
+                if (user != null)
+                {
+                    result = await signInManager.PasswordSignInAsync(user, obj.Password, obj.RememberMe, false);
+                }
+                if (result!=null && result.Succeeded)
                 {
                     if(!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                     {

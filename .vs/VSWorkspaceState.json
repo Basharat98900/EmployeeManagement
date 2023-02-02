@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Views",
+    "\\Views\\Account"
   ],
+  "SelectedNode": "\\Views\\Account\\AddPassword.cshtml",
   "PreviewInSolutionExplorer": false
 }

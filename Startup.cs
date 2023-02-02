@@ -34,6 +34,7 @@ namespace EF_DotNetCore
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddAuthorization(options =>
             {
+
             options.AddPolicy("DeleteRolePolicy", policy =>
             policy.RequireAssertion(context => context.User.IsInRole("Admin") &&
             context.User.HasClaim(c => c.Type == "Delete Role" && c.Value == "true") ||
@@ -54,8 +55,8 @@ namespace EF_DotNetCore
             services.AddAuthentication()
                 .AddGoogle(options =>
             {
-                options.ClientId = "545998292400-0kv52jhpa8p0amhfj5k8u2digrd2ifqt.apps.googleusercontent.com";
-                options.ClientSecret = "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";
+                options.ClientId = "837758499523-pvoofkhtmq4uc0v9pobqg6hff6f1h5md.apps.googleusercontent.com";
+                options.ClientSecret = "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";
             })
                 .AddFacebook(options =>
                 {
